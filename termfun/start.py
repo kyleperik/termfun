@@ -15,6 +15,18 @@ def getchar():
       termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
    return ch
 
+def draw(x, y, v, color=7, bgcolor=None):
+    s = str(v)
+    for i, line in enumerate(s.splitlines()):
+        with term.location(x, y + i):
+            print(
+                term.color(color)(
+                    term.on_color(bgcolor)(line)
+                    if bgcolor is not None
+                    else line
+                )
+            )
+
 def main(state, render, step):
     print(term.clear)
     render(state)

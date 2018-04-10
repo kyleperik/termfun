@@ -1,4 +1,4 @@
-from start import start
+from termfun.start import start
  
 start(
     0,
