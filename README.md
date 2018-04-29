@@ -8,7 +8,7 @@ Get the repo, then install with `pip install ./`
 
 Here's a test program, also included in `test.py`
 
-```
+``` python
 from termfun.start import start, draw
 
 start(
@@ -29,7 +29,7 @@ All you need to do is provide an initial state, a function that transforms your 
 
 Because you have to return a new state each round, it enables you to be more functional with your coding style. As opposed to a while loop like so, where you are forced to modify state each time.
 
-```
+``` python
 state = 0
 while True:
     state += 1
