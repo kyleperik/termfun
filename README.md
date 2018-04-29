@@ -6,7 +6,7 @@ Make making terminal games fun. Also functional.
 
 Get the repo, then install with `pip install ./`
 
-Here's a test program, also included in `termfun/test`
+Here's a test program, also included in `test.py`
 
 ```
 from termfun.start import start, draw
