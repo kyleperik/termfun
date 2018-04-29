@@ -42,6 +42,8 @@ For those of you who like nethack, it's easy to make a simple nethack like game,
 
 Although the examples here use simple lambda expressions, I'd suggest especially for a larger program that functions are split out or you will be eaten by a [velociraptor](https://www.xkcd.com/292/)
 
+There's an optional function that will evaluate whether it will skip prompting for a character. Append it to the end of `start` like this `lambda state: state.skip`.
+
 # Why?
 
 I like functional programming and I wanted to make a simple game. I couldn't find any thing that would make that easy for me, so I made this just to make this easier for myself.

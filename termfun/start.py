@@ -27,24 +27,24 @@ def draw(x, y, v, color=7, bgcolor=None):
                 )
             )
 
-def main(state, render, step):
+def main(state, render, step, skip):
     print(term.clear)
     render(state)
-    c = getchar()
+    c = getchar() if not skip(state) else ' '
     if ord(c) == 3:
         return
     nextstate = step(state, c)
     if nextstate is None: return
-    return lambda: main(nextstate, render, step)
+    return lambda: main(nextstate, render, step, skip)
 
-def start(state, step, render):
+def start(state, step, render, skip=lambda x: False):
     print(
         term.enter_fullscreen,
         term.cursor_invisible
     )
     try:
         with term.hidden_cursor():
-            r = lambda: main(state, render, step)
+            r = lambda: main(state, render, step, skip)
             while r is not None:
                 r = r()
     finally:
