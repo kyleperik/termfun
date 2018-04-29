@@ -38,6 +38,10 @@ while True:
 
 Termfun's approch makes it seem more like recursion (although underneath, it truly is a while loop to avoid a maximum recursion exceeded error)
 
+For those of you who like nethack, it's easy to make a simple nethack like game, I included a small sample `movearound.py` with a simple player who moves around.
+
+Although the examples here use simple lambda expressions, I'd suggest especially for a larger program that functions are split out or you will be eaten by a [velociraptor](https://www.xkcd.com/292/)
+
 # Why?
 
 I like functional programming and I wanted to make a simple game. I couldn't find any thing that would make that easy for me, so I made this just to make this easier for myself.
