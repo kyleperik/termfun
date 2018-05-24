@@ -1,4 +1,4 @@
-from termfun.start import start, draw
+from termfun import start, draw
 
 start(
     # State: could be literally anything

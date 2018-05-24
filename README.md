@@ -9,7 +9,7 @@ Get the repo, then install with `pip install ./`
 Here's a test program, also included in `test.py`
 
 ``` python
-from termfun.start import start, draw
+from termfun import start, draw
 
 start(
     # State: could be literally anything
