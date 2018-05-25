@@ -1,12 +1,9 @@
 from blessings import Terminal
-from termfun.nbinput import BlockingInput
+from termfun.nbinput import BlockingInput, NonBlockingInput
+
+from time import sleep
 
 term = Terminal()
-
-# cred https://gist.github.com/jasonrdsouza/1901709
-def getchar():
-    with BlockingInput() as bi:
-        return bi.escape_code()
 
 def draw(x, y, v, color=7, bgcolor=None):
     s = str(v)
@@ -20,26 +17,28 @@ def draw(x, y, v, color=7, bgcolor=None):
                 )
             )
 
-def main(state, render, step, skip):
+def main(state, render, step, skip, fps, i):
     print(term.clear)
     render(state)
-    c = getchar() if not skip(state) else ' '
-    if c is None:
+    c = (i.escape_code() if not skip(state) else ' ') if fps is None else i.char()
+    if c is None and fps is None:
         return
-    nextstate = step(state, c)
+    nextstate = step(state, c or '')
     if nextstate is None: return
-    return lambda: main(nextstate, render, step, skip)
+    if fps: sleep(60 / fps / 100)
+    return lambda: main(nextstate, render, step, skip, fps, i)
 
-def start(state, step, render, skip=lambda x: False):
+def start(state, step, render, skip=lambda x: False, fps=None):
     print(
         term.enter_fullscreen,
         term.cursor_invisible
     )
     try:
         with term.hidden_cursor():
-            r = lambda: main(state, render, step, skip)
-            while r is not None:
-                r = r()
+            with (NonBlockingInput() if fps else BlockingInput()) as nbi:
+                r = lambda: main(state, render, step, skip, fps, nbi)
+                while r is not None:
+                    r = r()
     finally:
         print(
             term.exit_fullscreen)
