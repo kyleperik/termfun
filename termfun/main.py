@@ -23,7 +23,7 @@ def main(state, render, step, skip, fps, i):
     c = (i.escape_code() if not skip(state) else ' ') if fps is None else i.char()
     if c is None and fps is None:
         return
-    nextstate = step(state, c or '')
+    nextstate = step(state, c or ' ')
     if nextstate is None: return
     if fps: sleep(60 / fps / 100)
     return lambda: main(nextstate, render, step, skip, fps, i)
