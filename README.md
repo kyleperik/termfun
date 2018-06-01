@@ -1,12 +1,14 @@
 # Termfun
 
-Make making terminal games fun. Also functional.
+Simple way to create a game in your terminal!
+
+![Demo](https://raw.githubusercontent.com/kyleperik/termfun/master/demo.gif)
 
 # Usage
 
 Get the repo, then install with `pip install ./`
 
-Here's a test program, also included in `test.py`
+Here's a test program, also included in `test.py` as shown above
 
 ``` python
 from termfun import start, draw
@@ -18,6 +20,7 @@ initialState = (0, '')
 # Function used to process one change in state
 def step(state, char): return (state[0] + 1, state[1] + char)
 
+# Run each frame to display the state
 def render(state):
     # The draw helper function lets you draw something anywhere
     #   on the screen, with optional color
