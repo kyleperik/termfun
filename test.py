@@ -1,10 +1,18 @@
 from termfun import start, draw
 
-start(
-    # State: could be literally anything
-    (0, ''),
-    # Step: function used to process one change in state
-    lambda state, char: (state[0] + 1, state[1] + char),
-    # Render: render your state here
-    lambda state: draw(5, 5, f'{state[0]}  {state[1]}', 6, 8) # x, y, string, fgcolor, bgcolor
-)
+# Create an initial state
+# This could literally be anything
+initialState = (0, '')
+
+# Function used to process one change in state
+def step(state, char): return (state[0] + 1, state[1] + char)
+
+def render(state):
+    # The draw helper function lets you draw something anywhere
+    #   on the screen, with optional color
+    # x y str [fgcolor] [bgcolor]
+    draw(0, 0, f'Frames since start: {state[0]}')
+    draw(0, 1, f'Typed chars with color: {state[1]}', 1, 6)
+
+# Put it all together, and start!
+start(initialState, step, render)
