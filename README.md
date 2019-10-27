@@ -62,5 +62,3 @@ I like functional programming and I wanted to make a simple game. I couldn't fin
 # What if I want to make something that isn't turn based?
 
 The optional parameter `fps` is made available to you. It takes your turn based program and just sends a blank char each time there isn't input during that frame
-
-*ISSUE:* if you type faster than the set fps, it does not always behave as it should (at least on linux). It will seem like what you type isn't doing anything, but then it will all come out once you type another char.
