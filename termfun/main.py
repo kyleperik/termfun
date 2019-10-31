@@ -21,7 +21,8 @@ def main(state, render, step, skip, fps, i):
     print(term.clear)
     c = (i.escape_code() if not skip(state) else ' ') if fps is None else i.char()
     # Clear the rest of the chars queued, if any
-    while i.char(): pass
+    if type(i) is NonBlockingInput:
+        while i.char(): pass
     if c is None and fps is None:
         return
     nextstate = step(state, c or ' ')
