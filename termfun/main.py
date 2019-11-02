@@ -17,22 +17,30 @@ def draw(x, y, v, color=7, bgcolor=None):
                 )
             )
 
-def main(state, render, step, skip, fps, i):
-    c = (i.escape_code() if not skip(state) else ' ') if fps is None else i.char()
-    # Clear the rest of the chars queued, if any
-    if type(i) is NonBlockingInput:
-        cleared_c = c
-        while cleared_c: cleared_c = i.char()
+def main(state, render, step, onchar, skip, fps, i):
+    print(term.clear)
+    render(state)
+    if fps: sleep(60 / fps / 100)
+    c = (
+        (' ' if skip(state) else i.escape_code())
+        if fps is None
+        else i.char()
+    )
     if c is None and fps is None:
         return
-    nextstate = step(state, c or ' ')
+    # Process all chars hit
+    charstate = state
+    if fps is not None:
+        while c:
+            charstate = onchar(charstate, c)
+            c = i.char()
+    else:
+        charstate = onchar(charstate, c or ' ')
+    nextstate = step(charstate)
     if nextstate is None: return
-    print(term.clear)
-    render(nextstate)
-    if fps: sleep(60 / fps / 100)
-    return lambda: main(nextstate, render, step, skip, fps, i)
+    return lambda: main(nextstate, render, step, onchar, skip, fps, i)
 
-def start(state, step, render, skip=lambda x: False, fps=None):
+def start(state, onchar, render, step=lambda s: s, skip=lambda x: False, fps=None):
     print(
         term.enter_fullscreen,
         term.cursor_invisible
@@ -40,7 +48,7 @@ def start(state, step, render, skip=lambda x: False, fps=None):
     try:
         with term.hidden_cursor():
             with (NonBlockingInput() if fps else BlockingInput()) as nbi:
-                r = lambda: main(state, render, step, skip, fps, nbi)
+                r = lambda: main(state, render, step, onchar, skip, fps, nbi)
                 while r is not None:
                     r = r()
     finally:

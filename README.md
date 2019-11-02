@@ -59,6 +59,6 @@ There's an optional function that will evaluate whether it will skip prompting f
 
 I like functional programming and I wanted to make a simple game. I couldn't find any thing that would make that easy for me, so I made this just to make this easier for myself.
 
-# What if I want to make something that isn't turn based?
+# Frames
 
-The optional parameter `fps` is made available to you. It takes your turn based program and just sends a blank char each time there isn't input during that frame
+The optional parameters `fps` and `step` are made available. Set `fps` to the desired frames per second, and `step` to a function which is processes the state each frame.

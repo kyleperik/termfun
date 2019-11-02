@@ -162,15 +162,26 @@ class _biGetchMacCarbon(_nbiGetchMacCarbon):
     pass
 
 
-def main():
+def main(blocking):
     import time
-    with BlockingInput() as bi:
-        while True:
-            c = bi.escape_code()
-            if c == chr(27):
-                break
-            print(c)
+    if blocking:
+        with BlockingInput() as bi:
+            while True:
+                c = bi.escape_code()
+                if c == chr(27):
+                    break
+                print(c)
+    else:
+        with NonBlockingInput() as nbi:
+            while True:
+                c = nbi.char()
+                while c:
+                    if c == chr(27):
+                        break
+                    print(c)
+                    c = nbi.char()
+                time.sleep(.2)
 
 
 if __name__ == '__main__':
-    main()
+    main(len(sys.argv) > 1 and sys.argv[1] != 'nbi')
