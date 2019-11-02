@@ -18,15 +18,16 @@ def draw(x, y, v, color=7, bgcolor=None):
             )
 
 def main(state, render, step, skip, fps, i):
-    print(term.clear)
     c = (i.escape_code() if not skip(state) else ' ') if fps is None else i.char()
     # Clear the rest of the chars queued, if any
     if type(i) is NonBlockingInput:
-        while i.char(): pass
+        cleared_c = c
+        while cleared_c: cleared_c = i.char()
     if c is None and fps is None:
         return
     nextstate = step(state, c or ' ')
     if nextstate is None: return
+    print(term.clear)
     render(nextstate)
     if fps: sleep(60 / fps / 100)
     return lambda: main(nextstate, render, step, skip, fps, i)
